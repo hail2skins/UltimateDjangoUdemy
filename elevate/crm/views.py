@@ -4,8 +4,8 @@ from django.http import HttpResponse # Add this import to allow for an HTTP resp
 # Create your views here.
 
 def home(request):
-    return HttpResponse("This is the home page") # Add this function to return an HTTP response
+    return render(request, 'crm/index.html') # Add this function to render the index.html template
 
 
 def register(request):
-    return HttpResponse("This is the registration page") # Add this function to return an HTTP response
+    return render(request, 'crm/register.html') # Add this function to render the register.html template
