@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect # Add this import to allow for ren
 from django.http import HttpResponse # Add this import to allow for an HTTP response
 from .models import Task # import the Task model
 from .forms import TaskForm # import the TaskForm model
+from .forms import CreateUserForm # import the CreateUserForm model
 
 # Create your views here.
 
@@ -127,4 +128,18 @@ def show_task(request, pk):
 
 # Register view
 def register(request):
-    return render(request, 'crm/register.html') # Add this function to render the register.html template
+    
+    # Create a new instance of the CreateUserForm model
+    form = CreateUserForm()
+    
+    # Check if the form has been submitted using if statement
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponse('User created successfully') #temporary until login page ready
+    context = {
+        'form': form,
+    }
+    
+    return render(request, 'crm/register.html', context) # Add this function to render the register.html template
