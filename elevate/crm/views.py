@@ -2,7 +2,14 @@ from django.shortcuts import render, redirect # Add this import to allow for ren
 from django.http import HttpResponse # Add this import to allow for an HTTP response
 from .models import Task # import the Task model
 from .forms import TaskForm # import the TaskForm model
+
+# for user registration
 from .forms import CreateUserForm # import the CreateUserForm model
+from .forms import LoginForm # import the LoginForm model
+
+# for user login
+from django.contrib.auth.models import auth # import the auth model
+from django.contrib.auth import authenticate, login, logout # import the authenticate and login functions
 
 # Create your views here.
 
@@ -137,9 +144,41 @@ def register(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponse('User created successfully') #temporary until login page ready
+            return redirect('login') #temporary until login page ready
     context = {
         'form': form,
     }
     
     return render(request, 'crm/register.html', context) # Add this function to render the register.html template
+
+# Login view
+def login(request):
+    # Create a new instance of the LoginForm model
+    form = LoginForm()
+    
+    # Check if the form has been submitted using if statement
+    if request.method == 'POST':
+        form = LoginForm(request, data=request.POST)
+        if form.is_valid():
+            # Get the username and password from the form
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            
+            # Authenticate the user
+            user = authenticate(request, username=username, password=password)
+            
+            # Check if user exists
+            if user is not None:
+                auth.login(request, user)
+                return redirect('dashboard') # Redirect to the dashboard view
+    
+    context = {
+        'form': form,
+    }
+    
+    
+    return render(request, 'crm/login.html', context) # Add this function to render the login.html template
+
+# Dashboard view
+def dashboard(request):
+    return render(request, 'crm/dashboard.html') # Add this function to render the dashboard.html template
