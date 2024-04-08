@@ -182,3 +182,8 @@ def login(request):
 # Dashboard view
 def dashboard(request):
     return render(request, 'crm/dashboard.html') # Add this function to render the dashboard.html template
+
+# Logout view
+def logout(request):
+    auth.logout(request)
+    return redirect('') # Redirect to the home page

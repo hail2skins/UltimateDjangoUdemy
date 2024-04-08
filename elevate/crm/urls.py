@@ -18,4 +18,5 @@ urlpatterns = [
     path('show-task/<str:pk>/', views.show_task, name="show-task"), # Add this line to map the task_show view to the task_show URL
     path('login', views.login, name="login"), # Add this line to map the login view to the login URL
     path('dashboard', views.dashboard, name="dashboard"), # Add this line to map the dashboard view to the dashboard URL
+    path('logout', views.logout, name="logout"), # Add this line to map the logout view to the logout URL
 ]
