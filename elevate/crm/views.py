@@ -5,6 +5,7 @@ from .forms import TaskForm # import the TaskForm model
 
 # Create your views here.
 
+# Homepage view
 def home(request):
     
     client_list = [
@@ -41,22 +42,7 @@ def home(request):
     
     return render(request, 'crm/index.html', context) # Add this function to render the index.html template
 
-
-def register(request):
-    return render(request, 'crm/register.html') # Add this function to render the register.html template
-
-def tasks(request):
-    
-    # Get all tasks from the database
-    tasks = Task.objects.all()
-    
-    context = {
-        'tasks': tasks,
-    }
-    
-    return render(request, 'crm/tasks.html', context) # Add this function to render the task.html template
-        
-
+# CRUD operations - Create a task
 def create_task(request):
     form = TaskForm() # Create a new instance of the TaskForm model
     
@@ -67,9 +53,26 @@ def create_task(request):
         # Check if the form is valid using if statement
         if form.is_valid():
             form.save() # Save the form data to the database
-            return redirect('tasks') # Redirect to the task view            
+            return redirect('view-tasks') # Redirect to the task view            
     
     context = {
         'form': form,
     }
     return render(request, 'crm/create-task.html', context) # Add this function to render the task_form.html template
+
+#CRUD operations - View all tasks
+def tasks(request):
+    
+    # Get all tasks from the database
+    tasks = Task.objects.all()
+    
+    context = {
+        'tasks': tasks,
+    }
+    
+    return render(request, 'crm/view-tasks.html', context) # Add this function to render the task.html template
+        
+
+# Register view
+def register(request):
+    return render(request, 'crm/register.html') # Add this function to render the register.html template

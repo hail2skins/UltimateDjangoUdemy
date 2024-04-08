@@ -3,25 +3,5 @@
 {% block content %}
     <h1>Welcome to My Website</h1>
     <p>This is a basic HTML page.</p>
-    
-    {% if first_name == 'John' %}
-        <p>Hi John!</p>
-    {% else %}
-        <p>Hi, {{ first_name }}!</p>
-    {% endif %}
-
-    {% for client in client_list %}
-        <p>{{ client }}</p>
-    {% endfor %}
-
-    {% for exam in examList %}
-        <br>
-        {{ exam.id }}
-        {{ exam.name }}
-        {{ exam.grade }}
-        
-    {% endfor %}
-
-    <a href="{% url 'create-task' %}">Create a task</a>
 
 {% endblock %}

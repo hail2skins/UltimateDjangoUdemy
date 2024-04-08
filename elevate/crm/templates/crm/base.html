@@ -11,7 +11,15 @@
     </header>
     
     <hr>
-    
+    <a href="{% url '' %}">Home</a>
+    &nbsp;
+    <a href="{% url 'create-task' %}">Create task</a>
+    &nbsp;
+    <a href="{% url 'view-tasks' %}">View tasks</a>
+    &nbsp;
+    <a href="{% url 'register' %}">Register</a>
+    <hr>
+
     <div>
         {% block content %}
         <!-- Add your main content here -->
