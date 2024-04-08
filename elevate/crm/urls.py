@@ -11,4 +11,5 @@ urlpatterns = [
     path('', views.home), # Add this line to map the root URL to the index view
     
     path('register/', views.register), # Add this line to map the register view to the register URL
+    path('task', views.task), # Add this line to map the task view to the task URL
 ]
