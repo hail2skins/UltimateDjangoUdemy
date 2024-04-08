@@ -1,0 +1,23 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+    <h3>Update task</h3>
+    <p>Fill in the form below to create a task</p>
+    <hr>
+    <form method="POST" autocomplete="off" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        
+        <button type="submit" class="btn btn-primary">Update Task</button>
+    </form>
+{% endblock %}

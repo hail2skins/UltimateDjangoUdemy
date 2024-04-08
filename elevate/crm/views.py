@@ -71,7 +71,30 @@ def tasks(request):
     }
     
     return render(request, 'crm/view-tasks.html', context) # Add this function to render the task.html template
+   
+#CRUD operations - Update a task
+def update_task(request, pk):
+    
+    # Get the task with the primary key (pk) from the database
+    task = Task.objects.get(id=pk)
+    
+    # Create a new instance of the TaskForm model with the task data
+    form = TaskForm(instance=task)
+    
+    # Check if the form has been submitted using if statement
+    if request.method == 'POST':
+        form = TaskForm(request.POST, instance=task) # Create a new instance of the TaskForm model with the POST data and task data
         
+        # Check if the form is valid using if statement
+        if form.is_valid():
+            form.save() # Save the form data to the database
+            return redirect('view-tasks') # Redirect to the task view
+    
+    context = {
+        'form': form,
+    }
+    
+    return render(request, 'crm/update-task.html', context) # Add this function to render the task_form.html template
 
 # Register view
 def register(request):
