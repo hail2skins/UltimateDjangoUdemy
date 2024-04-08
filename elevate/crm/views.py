@@ -96,6 +96,35 @@ def update_task(request, pk):
     
     return render(request, 'crm/update-task.html', context) # Add this function to render the task_form.html template
 
+# CRUD operations - Delete a task
+def delete_task(request, pk):
+    
+    # Get the task with the primary key (pk) from the database
+    task = Task.objects.get(id=pk)
+    
+    # Check if the request method is POST using if statement
+    if request.method == 'POST':
+        task.delete() # Delete the task from the database
+        return redirect('view-tasks') # Redirect to the task view
+    
+    context = {
+        'task': task,
+    }
+    
+    return render(request, 'crm/delete-task.html', context) # Add this function to render the delete_task.html template
+
+# Show a single task
+def show_task(request, pk):
+    
+    # Get the task with the primary key (pk) from the database
+    task = Task.objects.get(id=pk)
+    
+    context = {
+        'task': task,
+    }
+    
+    return render(request, 'crm/show-task.html', context) # Add this function to render the show_task.html template
+
 # Register view
 def register(request):
     return render(request, 'crm/register.html') # Add this function to render the register.html template

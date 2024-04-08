@@ -1,0 +1,16 @@
+{% extends 'crm/base.html' %}
+
+{% block content %}
+    <h1>View Task</h1>
+    
+    <hr>
+    {{ task }}
+    <br><br>
+    <br>
+    <a href="{% url 'update-task' task.id %}">Update Task</a>
+    &nbsp;
+    <a href="{% url 'delete-task' task.id %}">Delete Task</a>
+    <br>
+    
+
+{% endblock %}
