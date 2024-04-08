@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect # Add this import to allow for rendering and redirection
 from django.http import HttpResponse # Add this import to allow for an HTTP response
 from .models import Task # import the Task model
+from .forms import TaskForm # import the TaskForm model
 
 # Create your views here.
 
@@ -44,23 +45,31 @@ def home(request):
 def register(request):
     return render(request, 'crm/register.html') # Add this function to render the register.html template
 
-def task(request):
+def tasks(request):
     
-    # Get a single task object from the database
-    task = Task.objects.get(id=3)
-    
-    context = {
-        'task': task,
-    }
-        
-
-def getAllTasks(request):
-    
-    # Get all task objects from the database
+    # Get all tasks from the database
     tasks = Task.objects.all()
     
     context = {
         'tasks': tasks,
     }
     
-    return render(request, 'crm/tasks.html', context) # Add this function to render the tasks.html template
+    return render(request, 'crm/tasks.html', context) # Add this function to render the task.html template
+        
+
+def create_task(request):
+    form = TaskForm() # Create a new instance of the TaskForm model
+    
+    # Check if the form has been submitted using if statement
+    if request.method == 'POST':
+        form = TaskForm(request.POST) # Create a new instance of the TaskForm model with the POST data
+        
+        # Check if the form is valid using if statement
+        if form.is_valid():
+            form.save() # Save the form data to the database
+            return redirect('tasks') # Redirect to the task view            
+    
+    context = {
+        'form': form,
+    }
+    return render(request, 'crm/create-task.html', context) # Add this function to render the task_form.html template
