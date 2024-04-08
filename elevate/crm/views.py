@@ -11,6 +11,9 @@ from .forms import LoginForm # import the LoginForm model
 from django.contrib.auth.models import auth # import the auth model
 from django.contrib.auth import authenticate, login, logout # import the authenticate and login functions
 
+# for protecting views
+from django.contrib.auth.decorators import login_required # import the login_required decorator
+
 # Create your views here.
 
 # Homepage view
@@ -180,6 +183,7 @@ def login(request):
     return render(request, 'crm/login.html', context) # Add this function to render the login.html template
 
 # Dashboard view
+@login_required(login_url='login') # Add this decorator to protect the view
 def dashboard(request):
     return render(request, 'crm/dashboard.html') # Add this function to render the dashboard.html template
 
